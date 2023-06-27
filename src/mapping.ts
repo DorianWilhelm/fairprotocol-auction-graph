@@ -9,7 +9,7 @@ import {
 	Address,
 	BigInt,
 	BigDecimal,
-	log,
+	// log,
 	dataSource,
 	store,
 	Bytes,
@@ -387,14 +387,18 @@ function getUsdAmountTraded(
 		return ZERO.toBigDecimal();
 	}
 
-	let isBiddingTokenWeth = tokenList.weth
-		.toLowerCase()
-		.includes(addressBiddingToken.toHexString().toLowerCase());
+	// let isBiddingTokenWeth = tokenList.weth
+	// 	.toLowerCase()
+	// 	.includes(addressBiddingToken.toHexString().toLowerCase());
 
-	if (isBiddingTokenWeth) {
-		let price = oracles.uniswap.fetchPriceUSD(Address.fromBytes(addressBiddingToken));
-		return price;
-	}
+	// if (isBiddingTokenWeth) {
+	// let price = oracles.uniswap.fetchPriceUSD(Address.fromBytes(addressBiddingToken));
+	// log.info("1. Price of WETH: {}", [price.toString()])
+	// if (price) {
+	// 	log.info("2. Price of WETH: {}", [price.toString()])
+	// 	return price;
+	// }
+	// }
 
 	return ZERO.toBigDecimal();
 }
