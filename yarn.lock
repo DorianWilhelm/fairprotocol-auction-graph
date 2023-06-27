@@ -433,6 +433,14 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
+"@protofire/subgraph-devkit@^2.4.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@protofire/subgraph-devkit/-/subgraph-devkit-2.4.1.tgz#da45be8b61481f8170db34e4b404504f29e397da"
+  integrity sha512-tZfp0T4ZSkqj4hCXYrpMc0t5c3iIv1oG3VctOR+dls1y9+vsAf6d9G6sG1iFnU4F6bfXmdefoYvteFU9cR7mTw==
+  dependencies:
+    "@graphprotocol/graph-ts" "^0.29.3"
+    matchstick-as llopez/matchstick-as#dev
+
 "@rescript/std@9.0.0":
   version "9.0.0"
   resolved "https://registry.yarnpkg.com/@rescript/std/-/std-9.0.0.tgz#df53f3fa5911cb4e85bd66b92e9e58ddf3e4a7e1"
@@ -760,7 +768,7 @@ assemblyscript@0.19.10:
     binaryen "101.0.0-nightly.20210723"
     long "^4.0.0"
 
-assemblyscript@0.19.23:
+assemblyscript@0.19.23, assemblyscript@^0.19.20:
   version "0.19.23"
   resolved "https://registry.yarnpkg.com/assemblyscript/-/assemblyscript-0.19.23.tgz#16ece69f7f302161e2e736a0f6a474e6db72134c"
   integrity sha512-fwOQNZVTMga5KRsfY80g7cpOl4PsFQczMwHzdtgoqLXaYhkhavufKb0sB0l3T1DUxpAufA0KNhlbpuuhZUwxMA==
@@ -1766,9 +1774,9 @@ globby@^11.1.0:
     merge2 "^1.4.1"
     slash "^3.0.0"
 
-"gluegun@git+https://github.com/edgeandnode/gluegun.git#v4.3.1-pin-colors-dep":
+"gluegun@https://github.com/edgeandnode/gluegun#v4.3.1-pin-colors-dep":
   version "4.3.1"
-  resolved "git+https://github.com/edgeandnode/gluegun.git#b34b9003d7bf556836da41b57ef36eb21570620a"
+  resolved "https://github.com/edgeandnode/gluegun#b34b9003d7bf556836da41b57ef36eb21570620a"
   dependencies:
     apisauce "^1.0.1"
     app-module-path "^2.2.0"
@@ -2469,6 +2477,14 @@ matchstick-as@^0.5.2:
   resolved "https://registry.yarnpkg.com/matchstick-as/-/matchstick-as-0.5.2.tgz#6a6dde02d1d939c32458bd67bac688891a07a34c"
   integrity sha512-fb1OVphDKEvJY06Ue02Eh1CNncuW95vp6b8tNAP7UIqplICSLoU/zgN6U7ge7R0upsoO78C7CRi4EyK/7Jxz7g==
   dependencies:
+    wabt "1.0.24"
+
+matchstick-as@llopez/matchstick-as#dev:
+  version "0.5.0"
+  resolved "https://codeload.github.com/llopez/matchstick-as/tar.gz/69d35376ec310128a5dec10fcc52966e3933ef5e"
+  dependencies:
+    "@graphprotocol/graph-ts" "^0.29.3"
+    assemblyscript "^0.19.20"
     wabt "1.0.24"
 
 md5.js@^1.3.4:
