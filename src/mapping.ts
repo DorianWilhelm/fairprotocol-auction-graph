@@ -14,6 +14,7 @@ import {
 	store,
 	Bytes,
 } from "@graphprotocol/graph-ts";
+import { oracles } from "@protofire/subgraph-devkit";
 import { ERC20Contract } from "../generated/EasyAuction/ERC20Contract";
 import { AuctionDetail, User } from "../generated/schema";
 import {
@@ -31,6 +32,7 @@ import { Order } from "../generated/schema";
 import sortOrders from "./utils/sortOrders";
 import { getChainHexFromName, getChainIdFromName } from "./utils/getChainId";
 import { getTokenList } from "./legitTokens";
+import { getIsStableCoin } from "./utils/getIsStableCoin";
 
 const ZERO = BigInt.zero();
 const ONE = BigInt.fromI32(1);
@@ -359,28 +361,41 @@ function getUsdAmountTraded(
 	currentBiddingAmount: BigInt,
 	currentClearingPrice: BigDecimal
 ): BigDecimal {
-	const legitTokensList = getTokenList(
-		getChainIdFromName(dataSource.network())
-	);
-	if (!legitTokensList) {
-		return ZERO.toBigDecimal();
-	}
+	let chainId = getChainIdFromName(dataSource.network());
 
-	// Check if bidding token is a legit token
-	let isBiddingTokenLegit = legitTokensList.tokenAddressList.includes(
-		addressBiddingToken.toHexString().toLowerCase()
+	// Check if bidding token is stable coin
+	let isBiddingTokenStableCoin = getIsStableCoin(
+		addressBiddingToken.toHexString().toLowerCase(),
+		chainId
 	);
-	if (isBiddingTokenLegit) {
+
+	if (isBiddingTokenStableCoin) {
 		return currentBiddingAmount.toBigDecimal();
 	}
 
-	// Check if auctioning token is a legit token
-	let isAuctioningTokenLegit = legitTokensList.tokenAddressList.includes(
-		addressAuctioningToken.toHexString().toLowerCase()
+	let isAuctioningTokenStableCoin = getIsStableCoin(
+		addressAuctioningToken.toHexString().toLowerCase(),
+		chainId
 	);
-	if (isAuctioningTokenLegit) {
+
+	if (isAuctioningTokenStableCoin) {
 		return currentBiddingAmount.toBigDecimal().div(currentClearingPrice);
 	}
+
+	let tokenList = getTokenList(chainId);
+	if (!tokenList) {
+		return ZERO.toBigDecimal();
+	}
+
+	let isBiddingTokenWeth = tokenList.weth
+		.toLowerCase()
+		.includes(addressBiddingToken.toHexString().toLowerCase());
+
+	if (isBiddingTokenWeth) {
+		let price = oracles.uniswap.fetchPriceUSD(Address.fromBytes(addressBiddingToken));
+		return price;
+	}
+
 	return ZERO.toBigDecimal();
 }
 

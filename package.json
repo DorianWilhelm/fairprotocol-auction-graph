@@ -50,7 +50,8 @@
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "^0.48.0",
-    "@graphprotocol/graph-ts": "^0.29.3"
+    "@graphprotocol/graph-ts": "^0.29.3",
+    "@protofire/subgraph-devkit": "^2.4.1"
   },
   "version": "0.0.0"
 }
