@@ -15,6 +15,16 @@ export class Order extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
+
+    this.set("auctionId", Value.fromBigInt(BigInt.zero()));
+    this.set("sellAmount", Value.fromBigInt(BigInt.zero()));
+    this.set("buyAmount", Value.fromBigInt(BigInt.zero()));
+    this.set("userId", Value.fromBigInt(BigInt.zero()));
+    this.set("userAddress", Value.fromBytes(Bytes.empty()));
+    this.set("price", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("volume", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("txId", Value.fromBytes(Bytes.empty()));
   }
 
   save(): void {
@@ -35,11 +45,7 @@ export class Order extends Entity {
 
   get id(): string {
     let value = this.get("id");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toString();
-    }
+    return value!.toString();
   }
 
   set id(value: string) {
@@ -48,11 +54,7 @@ export class Order extends Entity {
 
   get auctionId(): BigInt {
     let value = this.get("auctionId");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
   set auctionId(value: BigInt) {
@@ -61,11 +63,7 @@ export class Order extends Entity {
 
   get sellAmount(): BigInt {
     let value = this.get("sellAmount");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
   set sellAmount(value: BigInt) {
@@ -74,11 +72,7 @@ export class Order extends Entity {
 
   get buyAmount(): BigInt {
     let value = this.get("buyAmount");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
   set buyAmount(value: BigInt) {
@@ -87,11 +81,7 @@ export class Order extends Entity {
 
   get userId(): BigInt {
     let value = this.get("userId");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
   set userId(value: BigInt) {
@@ -100,11 +90,7 @@ export class Order extends Entity {
 
   get userAddress(): Bytes {
     let value = this.get("userAddress");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBytes();
-    }
+    return value!.toBytes();
   }
 
   set userAddress(value: Bytes) {
@@ -113,11 +99,7 @@ export class Order extends Entity {
 
   get price(): BigDecimal {
     let value = this.get("price");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigDecimal();
-    }
+    return value!.toBigDecimal();
   }
 
   set price(value: BigDecimal) {
@@ -126,11 +108,7 @@ export class Order extends Entity {
 
   get volume(): BigDecimal {
     let value = this.get("volume");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigDecimal();
-    }
+    return value!.toBigDecimal();
   }
 
   set volume(value: BigDecimal) {
@@ -139,15 +117,20 @@ export class Order extends Entity {
 
   get timestamp(): BigInt {
     let value = this.get("timestamp");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
   set timestamp(value: BigInt) {
     this.set("timestamp", Value.fromBigInt(value));
+  }
+
+  get txId(): Bytes {
+    let value = this.get("txId");
+    return value!.toBytes();
+  }
+
+  set txId(value: Bytes) {
+    this.set("txId", Value.fromBytes(value));
   }
 }
 
@@ -155,6 +138,9 @@ export class User extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
+
+    this.set("address", Value.fromBytes(Bytes.empty()));
+    this.set("auctions", Value.fromStringArray(new Array(0)));
   }
 
   save(): void {
@@ -175,11 +161,7 @@ export class User extends Entity {
 
   get id(): string {
     let value = this.get("id");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toString();
-    }
+    return value!.toString();
   }
 
   set id(value: string) {
@@ -188,11 +170,7 @@ export class User extends Entity {
 
   get address(): Bytes {
     let value = this.get("address");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBytes();
-    }
+    return value!.toBytes();
   }
 
   set address(value: Bytes) {
@@ -201,11 +179,7 @@ export class User extends Entity {
 
   get auctions(): Array<string> {
     let value = this.get("auctions");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toStringArray();
-    }
+    return value!.toStringArray();
   }
 
   set auctions(value: Array<string>) {
@@ -217,6 +191,32 @@ export class AuctionDetail extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
+
+    this.set("auctionId", Value.fromBigInt(BigInt.zero()));
+    this.set("exactOrder", Value.fromString(""));
+    this.set("chainId", Value.fromString(""));
+    this.set("symbolAuctioningToken", Value.fromString(""));
+    this.set("symbolBiddingToken", Value.fromString(""));
+    this.set("addressAuctioningToken", Value.fromBytes(Bytes.empty()));
+    this.set("addressBiddingToken", Value.fromBytes(Bytes.empty()));
+    this.set("decimalsAuctioningToken", Value.fromBigInt(BigInt.zero()));
+    this.set("decimalsBiddingToken", Value.fromBigInt(BigInt.zero()));
+    this.set("endTimeTimestamp", Value.fromBigInt(BigInt.zero()));
+    this.set("orderCancellationEndDate", Value.fromBigInt(BigInt.zero()));
+    this.set("startingTimeStamp", Value.fromBigInt(BigInt.zero()));
+    this.set("minimumBiddingAmountPerOrder", Value.fromBigInt(BigInt.zero()));
+    this.set("minFundingThreshold", Value.fromBigInt(BigInt.zero()));
+    this.set("allowListManager", Value.fromBytes(Bytes.empty()));
+    this.set("allowListSigner", Value.fromBytes(Bytes.empty()));
+    this.set("currentVolume", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("currentClearingOrderSellAmount", Value.fromBigInt(BigInt.zero()));
+    this.set("currentClearingOrderBuyAmount", Value.fromBigInt(BigInt.zero()));
+    this.set("currentClearingPrice", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("currentBiddingAmount", Value.fromBigInt(BigInt.zero()));
+    this.set("isAtomicClosureAllowed", Value.fromBoolean(false));
+    this.set("isPrivateAuction", Value.fromBoolean(false));
+    this.set("interestScore", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("usdAmountTraded", Value.fromBigDecimal(BigDecimal.zero()));
   }
 
   save(): void {
@@ -237,11 +237,7 @@ export class AuctionDetail extends Entity {
 
   get id(): string {
     let value = this.get("id");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toString();
-    }
+    return value!.toString();
   }
 
   set id(value: string) {
@@ -250,11 +246,7 @@ export class AuctionDetail extends Entity {
 
   get auctionId(): BigInt {
     let value = this.get("auctionId");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
   set auctionId(value: BigInt) {
@@ -263,11 +255,7 @@ export class AuctionDetail extends Entity {
 
   get exactOrder(): string {
     let value = this.get("exactOrder");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toString();
-    }
+    return value!.toString();
   }
 
   set exactOrder(value: string) {
@@ -276,11 +264,7 @@ export class AuctionDetail extends Entity {
 
   get chainId(): string {
     let value = this.get("chainId");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toString();
-    }
+    return value!.toString();
   }
 
   set chainId(value: string) {
@@ -326,11 +310,7 @@ export class AuctionDetail extends Entity {
 
   get symbolAuctioningToken(): string {
     let value = this.get("symbolAuctioningToken");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toString();
-    }
+    return value!.toString();
   }
 
   set symbolAuctioningToken(value: string) {
@@ -339,11 +319,7 @@ export class AuctionDetail extends Entity {
 
   get symbolBiddingToken(): string {
     let value = this.get("symbolBiddingToken");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toString();
-    }
+    return value!.toString();
   }
 
   set symbolBiddingToken(value: string) {
@@ -352,11 +328,7 @@ export class AuctionDetail extends Entity {
 
   get addressAuctioningToken(): Bytes {
     let value = this.get("addressAuctioningToken");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBytes();
-    }
+    return value!.toBytes();
   }
 
   set addressAuctioningToken(value: Bytes) {
@@ -365,11 +337,7 @@ export class AuctionDetail extends Entity {
 
   get addressBiddingToken(): Bytes {
     let value = this.get("addressBiddingToken");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBytes();
-    }
+    return value!.toBytes();
   }
 
   set addressBiddingToken(value: Bytes) {
@@ -378,11 +346,7 @@ export class AuctionDetail extends Entity {
 
   get decimalsAuctioningToken(): BigInt {
     let value = this.get("decimalsAuctioningToken");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
   set decimalsAuctioningToken(value: BigInt) {
@@ -391,11 +355,7 @@ export class AuctionDetail extends Entity {
 
   get decimalsBiddingToken(): BigInt {
     let value = this.get("decimalsBiddingToken");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
   set decimalsBiddingToken(value: BigInt) {
@@ -404,11 +364,7 @@ export class AuctionDetail extends Entity {
 
   get endTimeTimestamp(): BigInt {
     let value = this.get("endTimeTimestamp");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
   set endTimeTimestamp(value: BigInt) {
@@ -417,11 +373,7 @@ export class AuctionDetail extends Entity {
 
   get orderCancellationEndDate(): BigInt {
     let value = this.get("orderCancellationEndDate");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
   set orderCancellationEndDate(value: BigInt) {
@@ -430,11 +382,7 @@ export class AuctionDetail extends Entity {
 
   get startingTimeStamp(): BigInt {
     let value = this.get("startingTimeStamp");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
   set startingTimeStamp(value: BigInt) {
@@ -443,11 +391,7 @@ export class AuctionDetail extends Entity {
 
   get minimumBiddingAmountPerOrder(): BigInt {
     let value = this.get("minimumBiddingAmountPerOrder");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
   set minimumBiddingAmountPerOrder(value: BigInt) {
@@ -456,11 +400,7 @@ export class AuctionDetail extends Entity {
 
   get minFundingThreshold(): BigInt {
     let value = this.get("minFundingThreshold");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
   set minFundingThreshold(value: BigInt) {
@@ -469,11 +409,7 @@ export class AuctionDetail extends Entity {
 
   get allowListManager(): Bytes {
     let value = this.get("allowListManager");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBytes();
-    }
+    return value!.toBytes();
   }
 
   set allowListManager(value: Bytes) {
@@ -482,11 +418,7 @@ export class AuctionDetail extends Entity {
 
   get allowListSigner(): Bytes {
     let value = this.get("allowListSigner");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBytes();
-    }
+    return value!.toBytes();
   }
 
   set allowListSigner(value: Bytes) {
@@ -495,11 +427,7 @@ export class AuctionDetail extends Entity {
 
   get currentVolume(): BigDecimal {
     let value = this.get("currentVolume");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigDecimal();
-    }
+    return value!.toBigDecimal();
   }
 
   set currentVolume(value: BigDecimal) {
@@ -508,11 +436,7 @@ export class AuctionDetail extends Entity {
 
   get currentClearingOrderSellAmount(): BigInt {
     let value = this.get("currentClearingOrderSellAmount");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
   set currentClearingOrderSellAmount(value: BigInt) {
@@ -521,11 +445,7 @@ export class AuctionDetail extends Entity {
 
   get currentClearingOrderBuyAmount(): BigInt {
     let value = this.get("currentClearingOrderBuyAmount");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
   set currentClearingOrderBuyAmount(value: BigInt) {
@@ -534,11 +454,7 @@ export class AuctionDetail extends Entity {
 
   get currentClearingPrice(): BigDecimal {
     let value = this.get("currentClearingPrice");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigDecimal();
-    }
+    return value!.toBigDecimal();
   }
 
   set currentClearingPrice(value: BigDecimal) {
@@ -547,11 +463,7 @@ export class AuctionDetail extends Entity {
 
   get currentBiddingAmount(): BigInt {
     let value = this.get("currentBiddingAmount");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
   set currentBiddingAmount(value: BigInt) {
@@ -560,11 +472,7 @@ export class AuctionDetail extends Entity {
 
   get isAtomicClosureAllowed(): boolean {
     let value = this.get("isAtomicClosureAllowed");
-    if (!value || value.kind == ValueKind.NULL) {
-      return false;
-    } else {
-      return value.toBoolean();
-    }
+    return value!.toBoolean();
   }
 
   set isAtomicClosureAllowed(value: boolean) {
@@ -573,11 +481,7 @@ export class AuctionDetail extends Entity {
 
   get isPrivateAuction(): boolean {
     let value = this.get("isPrivateAuction");
-    if (!value || value.kind == ValueKind.NULL) {
-      return false;
-    } else {
-      return value.toBoolean();
-    }
+    return value!.toBoolean();
   }
 
   set isPrivateAuction(value: boolean) {
@@ -586,11 +490,7 @@ export class AuctionDetail extends Entity {
 
   get interestScore(): BigDecimal {
     let value = this.get("interestScore");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigDecimal();
-    }
+    return value!.toBigDecimal();
   }
 
   set interestScore(value: BigDecimal) {
@@ -599,11 +499,7 @@ export class AuctionDetail extends Entity {
 
   get usdAmountTraded(): BigDecimal {
     let value = this.get("usdAmountTraded");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigDecimal();
-    }
+    return value!.toBigDecimal();
   }
 
   set usdAmountTraded(value: BigDecimal) {

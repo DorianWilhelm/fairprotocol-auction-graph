@@ -9,12 +9,10 @@ import {
 	Address,
 	BigInt,
 	BigDecimal,
-	// log,
 	dataSource,
 	store,
 	Bytes,
 } from "@graphprotocol/graph-ts";
-import { oracles } from "@protofire/subgraph-devkit";
 import { ERC20Contract } from "../generated/EasyAuction/ERC20Contract";
 import { AuctionDetail, User } from "../generated/schema";
 import {
@@ -276,6 +274,7 @@ export function handleNewSellOrder(event: NewSellOrder): void {
 	let sellAmount = event.params.sellAmount;
 	let buyAmount = event.params.buyAmount;
 	let userId = event.params.userId;
+	let txId = event.transaction.hash;
 
 	let user = User.load(userId.toString());
 	if (!user) {
@@ -304,6 +303,7 @@ export function handleNewSellOrder(event: NewSellOrder): void {
 	order.price = pricePoint.get("price");
 	order.volume = pricePoint.get("volume");
 	order.timestamp = event.block.timestamp;
+	order.txId = txId;
 	order.save();
 
 	let orders: string[] = [];
