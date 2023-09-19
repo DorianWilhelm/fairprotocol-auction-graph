@@ -20,9 +20,6 @@ yarn test
 
 ### Deploy to individual networks
 ```bash
-# Deploy to test urls
-yarn deploy:{network_name}-test
-
 # Deploy to production urls(prod is used for hosted services)
 yarn deploy:{network_name}-prod
 
