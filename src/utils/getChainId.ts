@@ -17,6 +17,10 @@ function getChainHexFromName(chainName: string): string {
 		return "0x38";
 	} else if (chainName.includes("bsc-testnet")) {
 		return "0x61";
+	} else if (chainName.includes("base")) {
+		return "0x2105";
+	} else if (chainName.includes("base-testnet")) {
+		return "0x14A33";
 	}
 	return "0x01";
 }
@@ -40,6 +44,10 @@ function getChainIdFromName(chainName: string): i32 {
 		return 56;
 	} else if (chainName.includes("bsc-testnet")) {
 		return 97;
+	} else if (chainName.includes("base")) {
+		return 8453;
+	} else if (chainName.includes("base-testnet")) {
+		return 84531;
 	}
 	return 1;
 }
