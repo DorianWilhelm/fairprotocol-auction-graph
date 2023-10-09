@@ -127,6 +127,34 @@ arbitrumTokens.setUsdt("0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9");
 arbitrumTokens.setWeth("0x82af49447d8a07e3bd95bd0d56f35241523fbab1");
 legitTokens.set(42161, arbitrumTokens);
 
+// Base
+let baseTokens = new LegitTokens(8453);
+baseTokens.setDai("0x50c5725949a6f0c72e6c4a641f24049a917db0cb");
+baseTokens.setUsdc("0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913");
+baseTokens.setUsdt("");
+baseTokens.setWeth("0x4200000000000000000000000000000000000006");
+
+// Base Testnet
+let baseTestnetTokens = new LegitTokens(84531);
+baseTestnetTokens.setDai("");
+baseTestnetTokens.setUsdc("0xF175520C52418dfE19C8098071a252da48Cd1C19");
+baseTestnetTokens.setUsdt("");
+baseTestnetTokens.setWeth("0x4200000000000000000000000000000000000006");
+
+// zkSync Mainnet
+let zkSyncTokens = new LegitTokens(324);
+zkSyncTokens.setDai("");
+zkSyncTokens.setUsdc("0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4");
+zkSyncTokens.setUsdt("0x493257fD37EDB34451f62EDf8D2a0C418852bA4C");
+zkSyncTokens.setWeth("0x8Ebe4A94740515945ad826238Fc4D56c6B8b0e60");
+
+// zkSync Testnet
+let zkSyncTestnetTokens = new LegitTokens(280);
+zkSyncTestnetTokens.setDai("0x3e7676937A7E96CFB7616f255b9AD9FF47363D4b");
+zkSyncTestnetTokens.setUsdc("0x0faF6df7054946141266420b43783387A78d82A9");
+zkSyncTestnetTokens.setUsdt("");
+zkSyncTestnetTokens.setWeth("0x20b28B1e4665FFf290650586ad76E977EAb90c5D");
+
 export function getTokenList(index: i32): LegitTokens | null {
 	if (legitTokens.has(index)) {
 		return legitTokens.get(index);
