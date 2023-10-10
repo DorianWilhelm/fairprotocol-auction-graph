@@ -1,5 +1,5 @@
 {
-    "network": "zksync2-testnet",
+    "network": "zkSync2-testnet",
     "address": "0x1EddE05b1205Bf9E336B8e8Cf33674EE3FD7b18B",
-    "startBlock": 3579820 
+    "startBlock": 12505212 
 }
