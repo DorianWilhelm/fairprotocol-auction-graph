@@ -21,7 +21,7 @@ function getChainHexFromName(chainName: string): string {
 		return "0x2105";
 	} else if (chainName.includes("base-testnet")) {
 		return "0x14A33";
-	} else if (chainName.includes("zksync2-testnet")) {
+	} else if (chainName.includes("zkSync2-testnet")) {
 		return "0x118";
 	} else if (chainName.includes("zksync-era")) {
 		return "0x144"
@@ -52,7 +52,7 @@ function getChainIdFromName(chainName: string): i32 {
 		return 8453;
 	} else if (chainName.includes("base-testnet")) {
 		return 84531;
-	} else if (chainName.includes("zksync2-testnet")) {
+	} else if (chainName.includes("zkSync2-testnet")) {
 		return 280;
 	} else if (chainName.includes("zksync-era")) {
 		return 324;
