@@ -36,6 +36,13 @@ const ZERO = BigInt.zero();
 const ONE = BigInt.fromI32(1);
 const TEN = BigInt.fromString("10");
 
+function createNewUser(userId: BigInt, userAddress: Address): User {
+    let user = new User(userId.toString());
+    user.address = userAddress;
+    user.auctions = new Array();
+    return user;
+  }
+
 export function handleAuctionCleared(event: AuctionCleared): void {
 	const auctioningTokensSold = event.params.soldAuctioningTokens;
 	const auctionId = event.params.auctionId;
@@ -278,7 +285,7 @@ export function handleNewSellOrder(event: NewSellOrder): void {
 
 	let user = User.load(userId.toString());
 	if (!user) {
-		user = new User(userId.toString());
+		user = createNewUser(userId, event.transaction.from);
 	}
 
 	let auctionDetails = AuctionDetail.load(auctionId.toString());
@@ -334,17 +341,16 @@ export function handleNewSellOrder(event: NewSellOrder): void {
 }
 
 export function handleNewUser(event: NewUser): void {
-	let userId = event.params.userId;
-	let userAddress = event.params.userAddress;
-	let user = new User(userId.toString());
-	user.address = userAddress;
-	user.auctions = new Array();
-	user.save();
+	let user = createNewUser(event.params.userId, event.params.userAddress);
+    user.save();
 }
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {}
 
-export function handleUserRegistration(event: UserRegistration): void {}
+export function handleUserRegistration(event: UserRegistration): void {
+    let user = createNewUser(event.params.userId, event.params.user);
+    user.save();
+}
 
 export function getOrderEntityId(
 	auctionId: BigInt,
